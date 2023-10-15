@@ -64,60 +64,40 @@ class FileStorage():
                    "Review": Review}
         return classes
 
-    def do_all(self, line):
-        """ Prints all string representation of all instances based or not
-        on the class name. Ex: $ all BaseModel or $ all """
-        if line != "":
-            args = line.split(' ')
-            if args[0] not in storage.classes():
-                print("** class doesn't exist **")
-            else:
-                l = [str(obj) for key, obj in storage.all().items()
-                     if type(obj).__name__ == args[0]]
-                print(l)
-        else:
-            l = [str(obj) for key, obj in storage.all().items()]
-            print(l)
+    def attributes(self):
+        """Returns the valid attributes and their types for classname."""
+        attributes = {
+            "BaseModel":
+                     {"id": str,
+                      "created_at": datetime.datetime,
+                      "updated_at": datetime.datetime},
+            "User":
+                     {"email": str,
+                      "password": str,
+                      "first_name": str,
+                      "last_name": str},
+            "State":
+                     {"name": str},
+            "City":
+                     {"state_id": str,
+                      "name": str},
+            "Amenity":
+                     {"name": str},
+            "Place":
+                     {"city_id": str,
+                      "user_id": str,
+                      "name": str,
+                      "description": str,
+                      "number_rooms": int,
+                      "number_bathrooms": int,
+                      "max_guest": int,
+                      "price_by_night": int,
+                      "latitude": float,
+                      "longitude": float,
+                      "amenity_ids": list},
+            "Review":
+                     {"place_id": str,
+                      "user_id": str,
+                      "text": str}
 
-    def do_update(self, line):
-        """ Updates an instance based on the class name and id by adding or updating attribute
-        (save the change into the JSON file).
-        Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com"."""
-        if line == "" or line is None:
-            print("** class name missing **")
-            return
-
-        rex = '^(\S+)(?:\s(\S+)(?:\s(\S+)(?:\s((?:"[^"]*")|(?:(\S)+)))?)?)?'
-        match = re.search(rex, line)
-        if not match:
-            print("** class name missing **")
-        elif match.group(1) not in storage.classes():
-            print("** class doesn't exist **")
-        elif match.group(2) is None:
-            print("** instance id missing **")
-        elif match.group(3) is None:
-            print("** attribute name missing **")
-        elif match.group(4) is None:
-            print("** value missing **")
-        else:
-            value = match.group(4).replace('"', '')
-            key = "{}.{}".format(match.group(1), match.group(2))
-            if key not in storage.all():
-                print("** no instance found **")
-            else:
-                attributes = storage.attributes()[match.group(1)]
-                if match.group(3) in attributes:
-                    value = attributes[match.group(3)](value)
-                setattr(storage.all()[key], match.group(3), value)
-                storage.all()[key].save()
-
-    def do_count(self, line):
-        """retrieve the number of instances of a class"""
-        args = line.split(' ')
-        if not args[0]:
-            print("** class name missing **")
-        elif args[0] not in storage.classes():
-            print("** class doesn't exist **")
-        else:
-            matches = [k for k in storage.all() if k.startswith(args[0] + '.')]
-            print(len(matches))
+        return attributes
