@@ -10,7 +10,15 @@ for obj_id in all_objs.keys():
 
 print("-- Create a new object --")
 my_model = BaseModel()
+<<<<<<< HEAD
 my_model.name = "My_First_Model"
 my_model.my_number = 89
 my_model.save()
 print(my_model)
+=======
+my_model.name = "Holberton"
+my_model.my_number = 89
+my_model.save()
+print(my_model)
+
+>>>>>>> 64999a53527c19229b2938550cca989d1ce86976

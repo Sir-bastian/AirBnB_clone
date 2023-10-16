@@ -1,140 +1,145 @@
 #!/usr/bin/python3
 
-""" 
-Unittest for BaseModel class 
-"""
-
+"""Module for testing the BaseModel class"""
 import unittest
-import inspect
+import json
 import pep8
+import datetime
+from time import sleep
+
 from models.base_model import BaseModel
-from datetime import datetime
 
 
-class BaseModel_testing(unittest.TestCase):
-    """ 
-    Inspect the BaseModel class. 
+class TestBaseModel(unittest.TestCase):
+    """
+    Unit Tests for the BaseModel Class
     """
 
-    def testpep8(self):
-        """ testing codestyle """
-        pepstylecode = pep8.StyleGuide(quiet=True)
-        rest = pepstylecode.check_files(['models/base_model.py',
-                                         'models/__init__.py',
-                                         'models/engine/file_storage.py'])
-        self.assertEqual(rest.total_errors, 0,
+    def test_doc_module(self):
+        """Module documentation"""
+        doc = BaseModel.__doc__
+        self.assertGreater(len(doc), 1)
+
+    def test_pep8_conformance_base_model(self):
+        """
+        PEP8 Compliance Check for models/base_model.py
+        """
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/base_model.py'])
+        self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-
-class test_for_base_model(unittest.TestCase):
-    """ 
-    Testing class for BaseModel. 
-    """
-    my_model = BaseModel()
-
-    def TearDown(self):
+    def test_pep8_conformance_test_base_model(self):
         """
-        Remove the json file 
+        PEP8 Compliance Check for tests/test_models/test_base_model.py
         """
-        del self.test
+        pep8style = pep8.StyleGuide(quiet=True)
+        res = pep8style.check_files(['tests/test_models/test_base_model.py'])
+        self.assertEqual(res.total_errors, 0,
+                         "Found code style errors (and warnings).")
 
-    def SetUp(self):
-        """ 
-        Instantiate an object. 
+    def test_doc_constructor(self):
+        """Constructor documentation"""
+        doc = BaseModel.__init__.__doc__
+        self.assertGreater(len(doc), 1)
+
+    def test_first_task(self):
         """
-        self.test = BaseModel()
-
-    def test_attr_none(self):
+        Unit Testing: Class Creation and to_dict Method
         """
-        An attribute with a 'None' value.
+        my_model = BaseModel()
+        self.assertIs(type(my_model), BaseModel)
+        my_model.name = "Holberton"
+        my_model.my_number = 89
+        self.assertEqual(my_model.name, "Holberton")
+        self.assertEqual(my_model.my_number, 89)
+        model_types_json = {
+            "my_number": int,
+            "name": str,
+            "__class__": str,
+            "updated_at": str,
+            "id": str,
+            "created_at": str
+        }
+        my_model_json = my_model.to_dict()
+        for key, value in model_types_json.items():
+            with self.subTest(key=key, value=value):
+                self.assertIn(key, my_model_json)
+                self.assertIs(type(my_model_json[key]), value)
+
+    def test_base_types(self):
+        """Testing dict model"""
+        second_model = BaseModel()
+        self.assertIs(type(second_model), BaseModel)
+        second_model.name = "Andres"
+        second_model.my_number = 80
+        self.assertEqual(second_model.name, "Andres")
+        self.assertEqual(second_model.my_number, 80)
+        model_types = {
+            "my_number": int,
+            "name": str,
+            "updated_at": datetime.datetime,
+            "id": str,
+            "created_at": datetime.datetime
+            }
+        for key, value in model_types.items():
+            with self.subTest(key=key, value=value):
+                self.assertIn(key, second_model.__dict__)
+                self.assertIs(type(second_model.__dict__[key]), value)
+
+    def test_uuid(self):
+        """Testing Various UUID Scenarios"""
+        model = BaseModel()
+        model_2 = BaseModel()
+        self.assertNotEqual(model.id, model_2.id)
+
+    def test_datetime_model(self):
         """
-        object_test = BaseModel(None)
-        self.assertTrue(hasattr(object_test, "id"))
-        self.assertTrue(hasattr(object_test, "created_at"))
-        self.assertTrue(hasattr(object_test, "updated_at"))
-
-    def test_kwargs_constructor_2(self):
-        """ 
-        Verify the 'id' attribute using data.
+        Unit Testing: DateTime Functionality in Base Model
         """
-        dictonary = {'score': 100}
+        model_3 = BaseModel()
+        model_4 = BaseModel()
+        self.assertNotEqual(model_3.created_at, model_3.updated_at)
+        self.assertNotEqual(model_3.created_at, model_4.created_at)
 
-        object_test = BaseModel(**dictonary)
-        self.assertTrue(hasattr(object_test, 'id'))
-        self.assertTrue(hasattr(object_test, 'created_at'))
-        self.assertTrue(hasattr(object_test, 'updated_at'))
-        self.assertTrue(hasattr(object_test, 'score'))
-
-    def test_str(self):
-
-        """ Test a string """
-        dictonary = {'id': 'cc9909cf-a909-9b90-9999-999fd99ca9a9',
-                     'created_at': '2025-06-28T14:00:00.000001',
-                     '__class__': 'BaseModel',
-                     'updated_at': '2030-06-28T14:00:00.000001',
-                     'score': 100
-                     }
-
-        object_test = BaseModel(**dictonary)
-        out = "[{}] ({}) {}\n".format(type(object_test).__name__, object_test.id, object_test.__dict__)
-
-    def test_to_dict(self):
-        """ 
-        Inspect a dictionary.
+    def test_string_representation(self):
         """
-        object_test = BaseModel(score=300)
-        n_dict = object_test.to_dict()
-
-        self.assertEqual(n_dict['id'], object_test.id)
-        self.assertEqual(n_dict['score'], 300)
-        self.assertEqual(n_dict['__class__'], 'BaseModel')
-        self.assertEqual(n_dict['created_at'], object_test.created_at.isoformat())
-        self.assertEqual(n_dict['updated_at'], object_test.updated_at.isoformat())
-
-        self.assertEqual(type(n_dict['created_at']), str)
-        self.assertEqual(type(n_dict['created_at']), str)
-
-    def test_datetime(self):
-        """ 
-        Examine a datetime. 
+        Unit Testing: __str__ Magic Method
         """
-        bas1 = BaseModel()
-        self.assertFalse(datetime.now() == bas1.created_at)
+        my_model = BaseModel()
+        my_model.name = "Holberton"
+        my_model.my_number = 89
+        id_model = my_model.id
 
-    def test_BaseModel(self):
-        """ 
-        Verify the attribute values in a BaseModel. 
+        expected = '[BaseModel] ({}) {}'\
+                   .format(id_model, my_model.__dict__)
+        self.assertEqual(str(my_model), expected)
+
+    def test_constructor_kwargs(self):
         """
-
-        self.my_model.name = "Holbie"
-        self.my_model.my_number = 100
-        self.my_model.save()
-        my_model_json = self.my_model.to_dict()
-
-        self.assertEqual(self.my_model.name, my_model_json['name'])
-        self.assertEqual(self.my_model.my_number, my_model_json['my_number'])
-        self.assertEqual('BaseModel', my_model_json['__class__'])
-        self.assertEqual(self.my_model.id, my_model_json['id'])
-
-    def test_savefirst(self):
-        """ 
-        Inspect numeric values. 
+        Unit Testing: Constructor with Keyword Arguments as Attribute Values
         """
-        with self.assertRaises(AttributeError):
-            BaseModel.save([455, 323232, 2323, 2323, 23332])
+        obj = BaseModel()
+        obj.name = "Holberton"
+        obj.my_number = 89
+        json_attributes = obj.to_dict()
 
-    def test_savesecond(self):
-        """ 
-        Examine a string. 
+        obj2 = BaseModel(**json_attributes)
+
+        self.assertIsInstance(obj2, BaseModel)
+        self.assertIsInstance(json_attributes, dict)
+        self.assertIsNot(obj, obj2)
+
+    def test_file_save(self):
         """
-        with self.assertRaises(AttributeError):
-            BaseModel.save("THIS IS A TEST")
-
-    def test_inst(self):
-        """ 
-        Inspect a class. 
+        Unit Testing: Saving Information to File
         """
-        ml = BaseModel()
-        self.assertTrue(ml, BaseModel)
+        b3 = BaseModel()
+        b3.save()
+        with open("file.json", 'r') as f:
+            self.assertIn(b3.id, f.read())
 
+
+if __name__ == '__main__':
+    unittest.main()
 
