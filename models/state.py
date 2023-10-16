@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # - state module
 
-from models.base_models import BaseModel
+from models.base_model import BaseModel
 """ State module """
 
 
