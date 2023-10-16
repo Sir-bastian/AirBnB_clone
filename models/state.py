@@ -5,7 +5,7 @@ from models.base_model import BaseModel
 """ State module """
 
 
-class State(baseModel):
+class State(BaseModel):
     """ class with the name of the states """
     name = ""
 

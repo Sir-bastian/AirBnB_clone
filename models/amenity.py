@@ -5,7 +5,7 @@ from models.base_model import BaseModel
 """amenity module """
 
 
-class Amenity(baseModel):
+class Amenity(BaseModel):
     """Amenity classs that inherits from BAseModel class"""
     name = ""
 

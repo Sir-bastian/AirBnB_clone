@@ -15,7 +15,7 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    prompt = '(hbnb) '
+    prompt = "(hbnb)"
     __classes = [
         "Amenity",
         "BaseModel",
@@ -166,7 +166,7 @@ class HBNBCommand(cmd.Cmd):
 
     def emptyline(self):
         '''dont execute anything when user
-           press enter an empty line
+           press enter on an empty line
         '''
         pass
 
