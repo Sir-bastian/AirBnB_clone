@@ -32,6 +32,16 @@ class TestFileStorage(unittest.TestCase):
         p = style.check_files(['models/engine/file_storage.py'])
         self.assertEqual(p.total_errors, 0, "fix pep8")
 
+     def test_module_doc(self):
+        """test module documentation"""
+        doc = __import__('models.engine.file_storage').__doc__
+        self.assertGreater(len(doc), 1)
+
+    def test_class_doc(self):
+        """test class documentation"""
+        doc = TestFileStorage.__doc__
+        self.assertGreater(len(doc), 1)
+
     def setUp(self):
         """
         Set up test environment
