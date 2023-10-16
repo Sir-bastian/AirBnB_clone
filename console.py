@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-
-"""
-Command Interpreter Method: Process User Commands
-"""
+'''Method Command Interpreter'''
 import cmd
 import shlex
 import models
@@ -30,10 +27,9 @@ class HBNBCommand(cmd.Cmd):
     ]
 
     def do_create(self, args):
-        """
-        Create and Save an Instance of BaseModel and Print its ID.Usage: create <class name>
-        """
-        
+        '''Create a new instance of BaseModel, save it and prints the id
+           Usage: create <class name>
+        '''
         args = args.split()
         if len(args) == 0:
             print("** class name missing **")
@@ -45,10 +41,9 @@ class HBNBCommand(cmd.Cmd):
             print(new_creation.id)
 
     def do_show(self, args):
-        """
-        Show the String Representation of a Specific Instance.
-        Usage: show <class name> <id>
-        """
+        '''Prints the string representation of a specific instance
+           Usage: show <class name> <id>
+        '''
         strings = args.split()
         if len(strings) == 0:
             print("** class name missing **")
@@ -65,10 +60,9 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_destroy(self, args):
-        """
-        Delete an Instance.
-        Usage: destroy <class name> <id>
-        """
+        '''Delete an instance
+           Usage: destroy <class name> <id>
+        '''
         args = args.split()
         objects = models.storage.all()
 
@@ -87,10 +81,9 @@ class HBNBCommand(cmd.Cmd):
                 print('** no instance found **')
 
     def do_all(self, args):
-        """
-        Show String Representations of All Instances.
-        Usage: all <class name>
-        """
+        '''Print a string representation of all instances
+           Usage: all <class name>
+        '''
         args = args.split()
         objects = models.storage.all()
         new_list = []
@@ -108,10 +101,9 @@ class HBNBCommand(cmd.Cmd):
             print(new_list)
 
     def do_update(self, args):
-        """
-        Modify an Instance's Attribute.
-        Usage: update <class name> <id> <attribute name> "<attribute value>"
-        """
+        '''update an instance
+           Usage update <class name> <id> <attribute name> "<attribute value>"
+        '''
         objects = models.storage.all()
         args = args.split(" ")
 
@@ -137,9 +129,7 @@ class HBNBCommand(cmd.Cmd):
             models.storage.save()
 
     def check_class_name(self, name=""):
-        """
-        Check if the user has entered a class name and ID in stdin.
-        """
+        """Check if stdin user typed class name and id."""
         if len(name) == 0:
             print("** class name missing **")
             return False
