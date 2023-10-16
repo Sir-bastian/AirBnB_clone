@@ -29,8 +29,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-<<<<<<< HEAD
-     def test_module_doc(self):
+    def test_module_doc(self):
         """test module documentation"""
         doc = __import__('models.user').__doc__
         self.assertGreater(len(doc), 1)
@@ -39,7 +38,7 @@ class TestUser(unittest.TestCase):
         """test class documentation"""
         doc = User.__doc__
         self.assertGreater(len(doc), 1)
-=======
+
     def test_pep8_conformance_test_base_model(self):
         """
         PEP8 Compliance Check for tests/test_models/test_user.py
@@ -69,7 +68,6 @@ class TestUser(unittest.TestCase):
             self.assertIsInstance(User.first_name, str)
             self.assertIsInstance(User.last_name, str)
 
+
 if __name__ == '__main__':
     unittest.main()
-
->>>>>>> 64999a53527c19229b2938550cca989d1ce86976

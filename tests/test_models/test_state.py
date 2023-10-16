@@ -29,7 +29,6 @@ class TestState(unittest.TestCase):
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-<<<<<<< HEAD
     def test_module_doc(self):
         """test module documentation"""
         doc = __import__('models.state').__doc__
@@ -39,7 +38,7 @@ class TestState(unittest.TestCase):
         """test class documentation"""
         doc = State.__doc__
         self.assertGreater(len(doc), 1)
-=======
+
     def test_pep8_conformance_test_state(self):
         """
         PEP8 Compliance Check for tests/test_models/test_state.py
@@ -66,7 +65,6 @@ class TestState(unittest.TestCase):
         with self.subTest(msg='Attributes'):
             self.assertIsInstance(State.name, str)
 
+
 if __name__ == '__main__':
     unittest.main()
-
->>>>>>> 64999a53527c19229b2938550cca989d1ce86976

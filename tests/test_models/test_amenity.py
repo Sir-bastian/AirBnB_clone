@@ -27,12 +27,16 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-<<<<<<< HEAD
-     def test_module_doc(self):
+    def test_module_doc(self):
         """test module documentation"""
         doc = __import__('models.amenity').__doc__
         self.assertGreater(len(doc), 1)
-=======
+
+    def test_class_doc(self):
+        """test class documentation"""
+        doc = Amenity.__doc__
+        self.assertGreater(len(doc), 1)
+
     def test_pep8_conformance_test_amenity(self):
         """
         Verify PEP 8 Compliance in tests/test_models/test_state.py
@@ -57,11 +61,6 @@ class TestAmenity(unittest.TestCase):
         with self.subTest(msg='Attributes'):
             self.assertIsInstance(Amenity.name, str)
 
+
 if __name__ == '__main__':
     unittest.main()
->>>>>>> 64999a53527c19229b2938550cca989d1ce86976
-
-    def test_class_doc(self):
-        """test class documentation"""
-        doc = Amenity.__doc__
-        self.assertGreater(len(doc), 1)

@@ -19,6 +19,11 @@ class TestPlace(unittest.TestCase):
         doc = Place.__doc__
         self.assertGreater(len(doc), 1)
 
+    def test_class_doc(self):
+        """test class documentation"""
+        doc = Place.__doc__
+        self.assertGreater(len(doc), 1)
+
     def test_pep8_conformance_place(self):
         """
         PEP8 Compliance Check for models/place.py
@@ -28,12 +33,11 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
-<<<<<<< HEAD
     def test_module_doc(self):
         """test module documentation"""
         doc = __import__('models.place').__doc__
         self.assertGreater(len(doc), 1)
-=======
+
     def test_pep8_conformance_test_place(self):
         """
         PEP8 Compliance Check for tests/test_models/test_place.py
@@ -70,11 +74,6 @@ class TestPlace(unittest.TestCase):
             self.assertIsInstance(Place.longitude, float)
             self.assertIsInstance(Place.amenity_ids, list)
 
+
 if __name__ == '__main__':
     unittest.main()
->>>>>>> 64999a53527c19229b2938550cca989d1ce86976
-
-    def test_class_doc(self):
-        """test class documentation"""
-        doc = Place.__doc__
-        self.assertGreater(len(doc), 1)
