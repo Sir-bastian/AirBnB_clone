@@ -1,11 +1,15 @@
-.filters {
+.container .filters{ 
     background-color: white;
+    color: #ffffff;
     height: 70px;
+    width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     display: flex;  
-    align-items: center;
+    align-items: flex-end;
     position: relative;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .filters button {
@@ -18,8 +22,10 @@
     border-radius: 4px;
     position: absolute;
     right: 30px;
-    
-}
-.filters button:hover {
+    margin-right: 30px;
+    margin-left: auto;
+
+button:hover 
+{
     opacity: 0.9;
 }
