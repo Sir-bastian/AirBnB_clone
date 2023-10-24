@@ -15,3 +15,14 @@ body {
     max-width: 1000px;
     flex: 1 0 auto;
 }
+
+
+p {
+    text-align: center;
+    vertical-align: middle;
+    color: #484848;
+}
+
+div {
+    flex: 1 0 auto;
+}
